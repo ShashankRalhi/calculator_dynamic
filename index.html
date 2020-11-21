@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS Calculator</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<div class="row saleh">
+    <div class=" col-xs-12  col-sm-offset-4 col-sm-12  col-md-offset-3 col-md-6  col-lg-offset-3 col-lg-6  ">
+        <form name="form" method="POST"
+            class="well calcontainer col-xs-12  col-sm-offset-4 col-sm-12  col-md-offset-3 col-md-6  col-lg-offset-3 col-lg-6">
+
+            <!-- panel for the calc -->
+
+            <input class=" form-control " id="panel" name="panel" placeholder="0." disabled><br />
+
+            <!-- User Input Buttons for the calc -->
+
+            <input class="form-group btn btn-default bttn" type="button" value="7" onclick="button('7')">
+            <input class="form-group btn btn-default bttn" type="button" value="8" onclick="button('8')">
+            <input class="form-group btn btn-default bttn" type="button" value="9" onclick="button('9')">
+            <input class="form-group btn btn-danger bttn" type="button" value="+" onclick="button('+')">
+
+            <input class="form-group btn btn-default bttn" type="button" name="bttn4" value="4" onclick="button('4')">
+            <input class="form-group btn btn-default bttn" type="button" name="bttn5" value="5" onclick="button('5')">
+            <input class="form-group btn btn-default bttn" type="button" name="bttn6" value="6" onclick="button('6')">
+            <input class="form-group btn btn-danger bttn" type="button" name="bttnminus" value="-"
+                onclick="button('-')">
+
+            </br>
+
+            <input class="form-group btn btn-default bttn" type="button" name="bttn1" value="1" onclick="button('1')">
+            <input class="form-group btn btn-default bttn" type="button" name="bttn2" value="2" onclick="button('2')">
+            <input class="form-group btn btn-default bttn" type="button" name="bttn3" value="3" onclick="button('3')">
+            <input class="form-group btn btn-danger bttn" type="button" name="bttnmulti" value="*"
+                onclick="button('*')">
+
+            <br />
+
+            <input class="form-group btn btn-default bttn" type="button" name="bttn0" value="0" onclick="button('0')">
+            <input class="form-group btn btn-success bttn bttne" type="button" name="bttnEQL" value="=" id="equal">
+
+            <input class="form-group btn btn-danger bttn" type="button" name="bttndiv" value="/" onclick="button('/')">
+
+            <!-- calling new reset function -->
+
+        </form>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+    var buttonOne = 0;
+    var buttonTwo = 0;
+    var opt;
+
+    function button(a) {
+
+        console.log(a);
+
+        document.getElementById("panel").value += a;
+
+        if (a !== '+' && a !== '-' && a !== '*' && a !== '/') {
+            temp = parseInt(a);
+            if (buttonOne == 0) {
+                buttonOne = a;
+                temp = 0;
+                //console.log("buttonOne" + buttonOne);
+            }
+            else {
+                buttonTwo = a;
+                //console.log("buttonTwo" + buttonTwo);
+            }
+        }
+        else {
+            opt = a;
+            //console.log(opt);
+        }
+
+        $.ajax({
+            type: 'post',
+            url: 'cal.php',
+            data: {
+                num1: buttonOne,
+                num2: buttonTwo,
+                opt: opt,
+            },
+            success: function (msg) {
+                //alert('form was submitted' + msg);
+
+                document.getElementById("panel").value = "";
+
+                document.getElementById("panel").value = msg;
+
+                console.log(msg);
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<script type="text/javascript">
+
+    var numOne = 0;
+    var numTwo = 0;
+    var optOne;
+    var optTwo;
+    var temp;
+    var result = 0;
+
+    function num(a) {
+        if (a !== '+' && a !== '-' && a !== '*' && a !== '/') {
+            temp = parseInt(document.getElementById("panel").value += a);
+
+
+
+            // // Addition
+            // if (numOne == 0) {
+            //     numOne = temp;
+            //     temp = 0;
+            //     //console.log("numOne=" + numOne);
+            // }
+            // else {
+            //     numTwo = temp
+            //     console.log("numTwo=" + numTwo);
+            //     temp = 0;
+            //     if (result == 0) {
+            //         result = numOne + numTwo;
+            //         //console.log(result);
+            //     } else {
+            //         numOne = result;
+            //         result = result + numTwo;
+            //         //console.log("result" + result);
+            //         //console.log("numOne=" + numOne);
+            //     }
+            // }
+
+
+
+
+
+
+
+            //Sub
+
+            // if (numOne == 0) {
+            //     numOne = temp;
+            //     temp = 0;
+            //     console.log("numOne=" + numOne);
+            // }
+            // else {
+            //     numTwo = temp
+            //     console.log("numTwo=" + numTwo);
+            //     temp = 0;
+            //     if (result == 0) {
+            //         result = numOne - numTwo;
+            //         console.log(result);
+            //     } else {
+            //         numOne = result;
+            //         result = result - numTwo;
+            //         console.log("result" + result);
+            //         console.log("numOne=" + numOne);
+            //     }
+            // }
+
+
+
+
+
+            //Division
+
+            if (numOne == 0 && optOne == null) {
+                numOne = temp;
+                temp = 0;
+                console.log("numOne=" + numOne);
+            }
+            else {
+                numTwo = temp
+                console.log("numTwo=" + numTwo);
+                temp = 0;
+                if (result == 0) {
+                    // result = numOne / numTwo;
+                    //console.log(result);
+                } else {
+                    numOne = result;
+                    result = result / numTwo;
+                    // console.log("result" + result);
+                    //console.log("numOne=" + numOne);
+                }
+            }
+
+
+
+
+            // console.log(numOne);
+        } else {
+            document.getElementById("panel").value = '';
+            optOne = a;
+            console.log("opt" + optOne);
+            //cal();
+        }
+    }
+
+</script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
